@@ -6,7 +6,7 @@ These code-along templates are designed to facilitate faster coding and organiza
 
 ## Downloading templates
 
-Please be sure to download the necessary template files ahead of each class and save them to your `EDS-240-class-examples`.
+Please be sure to download the necessary template files ahead of each class and save them to your `EDS-240-class-examples` repository.
 
 Find the templates linked under the weekly Lecture Materials section of the course website (e.g. see [week 1](https://eds-240-data-viz.github.io/course-materials/week1.html#lecture-materials)), then click the download button: 
 

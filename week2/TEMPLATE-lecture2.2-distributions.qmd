@@ -7,7 +7,7 @@ toc: true
 ---
 
 ::: {.callout-note}
-This template follows [lecture 2.2 slides](){target="_blank}.
+This template follows [lecture 2.2 slides](https://eds-240-data-viz.github.io/course-materials/lecture-slides/lecture2.2-distributions-slides.html#/title-slide){target="_blank}.
 :::
 
 ## Setup

@@ -12,6 +12,8 @@ This template follows [lecture 2.3 slides](https://eds-240-data-viz.github.io/co
 
 ## Setup
 
+**Note:** `{tidycensus}` functions (e.g. `get_estimates()`) internally call `Sys.getenv("CENSUS_API_KEY)` to retrieve your key from `.Renviron`. This means you don't need to explicitly call `Sys.getenv("CENSUS_API_KEY)` in your code -- `{tidycensus}` handles that for you!
+
 ```{r}
 #| eval: true
 #| echo: true

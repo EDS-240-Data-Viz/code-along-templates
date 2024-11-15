@@ -7,7 +7,7 @@ toc: true
 ---
 
 ::: {.callout-note}
-This template follows [lecture 1.3 slides](https://samanthacsik.github.io/EDS-240-data-viz/course-materials/lecture-slides/week1.3-ggplot-review-slides.html#/title-slide){target="_blank}.
+This template follows [lecture 1.3 slides](https://eds-240-data-viz.github.io/course-materials/lecture-slides/lecture1.3-ggplot-review-slides.html#/title-slide){target="_blank}.
 :::
 
 ## Setup

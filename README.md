@@ -10,7 +10,7 @@ Please be sure to download the necessary template files ahead of each class and 
 
 Find the templates linked under the weekly Lecture Materials section of the course website (e.g. see [week 1](https://eds-240-data-viz.github.io/course-materials/week1.html#lecture-materials)), then click the download button: 
 
-<img width="800" src="https://github.com/user-attachments/assets/f952a9c6-1951-42b4-8084-758ced5fe4d9">
+<img width="800" src="https://github.com/user-attachments/assets/6a0fce78-a3a9-41ff-9a5c-ad7e69abe13c">
 
 ## Report a bug / issue
 

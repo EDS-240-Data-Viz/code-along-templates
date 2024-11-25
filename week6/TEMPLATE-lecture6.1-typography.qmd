@@ -2,7 +2,7 @@
 title: "Lecture 6.1 TEMPLATE"
 subtitle: "Typography"
 author: "Your Name"
-date: 2025-02-03
+date: 2025-02-10
 toc: true
 ---
 
@@ -140,8 +140,10 @@ See [lecture 4.1](https://eds-240-data-viz.github.io/course-materials/lecture-sl
 #| warning: false
 # recreate original plot ----
 plot <- ggplot(subset_jobs) +
-  geom_segment(aes(x = total_earnings_female, xend = total_earnings_male,
-                 y = fct_reorder(occupation, total_earnings), yend = occupation)) +
+  geom_segment(aes(x = total_earnings_female, 
+                   xend = total_earnings_male,
+                   y = fct_reorder(occupation, total_earnings), 
+                   yend = occupation)) +
   geom_point(aes(x = total_earnings_male, y = occupation),
              color = "#CD93D8", size = 3.25) +
   geom_point(aes(x = total_earnings_female, y = occupation),
@@ -172,8 +174,10 @@ plot
 #| warning: false
 # update plot colors using palette ----
 plot <- ggplot(subset_jobs) +
-  geom_segment(aes(x = total_earnings_female, xend = total_earnings_male,
-                 y = fct_reorder(occupation, total_earnings), yend = occupation)) +
+  geom_segment(aes(x = total_earnings_female, 
+                   xend = total_earnings_male,
+                   y = fct_reorder(occupation, total_earnings), 
+                   yend = occupation)) +
   geom_point(aes(x = total_earnings_male, y = occupation),
              color = "#CD93D8", size = 3.25) +
   geom_point(aes(x = total_earnings_female, y = occupation),

@@ -188,7 +188,8 @@ penguin_summary <- penguins |>
 
 ```{r}
 #| warning: false
-# ~ CODE ALONG HERE ~
+ggplot(penguins, aes(x = species, y = after_stat(prop), group = 1)) +
+  geom_bar()
 ```
 
 ### Example 4 (default position adjustment)

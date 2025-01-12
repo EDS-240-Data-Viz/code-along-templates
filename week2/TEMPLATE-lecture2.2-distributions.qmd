@@ -29,6 +29,10 @@ This template follows [lecture 2.2 slides](https://eds-240-data-viz.github.io/co
 library(tidyverse)
 library(chron)
 library(naniar)
+library(ggridges)
+library(gghighlight)
+library(ggbeeswarm)
+library(see)
 library(palmerpenguins) # for some minimal examples
 
 #..........................import data...........................
@@ -116,7 +120,7 @@ mko_clean |>
 #| echo: true
 #| warning: false
 
-# histogram with fewer months ----
+# histogram with fewer months; use these colors: c("#2C5374", "#ADD8E6", "#8B3A3A") ----
 mko_clean |> 
   mutate(month_name = factor(month_name, levels = month.name)) |> 
   ggplot(aes(x = Temp_bot, fill = month_name)) +
@@ -266,6 +270,28 @@ ggplot(mko_clean, aes(x = Temp_bot, y = month_name, fill = after_stat(x))) +
   scale_fill_gradientn(colors = c("#2C5374","#849BB4", "#D9E7EC", "#EF8080", "#8B3A3A"))
 ```
 
+Remember, you can also reorder factor levels during the data wrangling stage:
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| layout-ncol: 2
+
+# e.g. by month: ----
+mko_clean |> 
+  ggplot(aes(x = Temp_bot, y = month_name, fill = after_stat(x))) +
+  ggridges::geom_density_ridges_gradient(rel_min_height = 0.01, scale = 3) +
+  scale_fill_gradientn(colors = c("#2C5374","#849BB4", "#D9E7EC", "#EF8080", "#8B3A3A"))
+
+# e.g. by median temp ---
+mko_clean |> 
+  ggplot(aes(x = Temp_bot, y = month_name, fill = after_stat(x))) +
+  ggridges::geom_density_ridges_gradient(rel_min_height = 0.01, scale = 3) +
+  scale_fill_gradientn(colors = c("#2C5374","#849BB4", "#D9E7EC", "#EF8080", "#8B3A3A"))
+```
+
 ### Alt 2: add quantiles
 
 ```{r}
@@ -339,7 +365,7 @@ ggplot(mko_clean, aes(x = month_name, y = Temp_bot)) +
 #| warning: false
 
 # add jittered data points ----
-ggplot(palmerpenguins::penguins, aes(x = species, y = body_mass_g)) +
+ggplot(penguins, aes(x = species, y = body_mass_g)) +
   geom_boxplot()
 ```
 
@@ -351,7 +377,7 @@ ggplot(palmerpenguins::penguins, aes(x = species, y = body_mass_g)) +
 #| warning: false
 
 # dodge groups by year ----
-ggplot(palmerpenguins::penguins, aes(x = species, y = body_mass_g)) +
+ggplot(penguins, aes(x = species, y = body_mass_g)) +
   geom_boxplot(outlier.shape = NA) 
 ```
 
@@ -363,7 +389,7 @@ ggplot(palmerpenguins::penguins, aes(x = species, y = body_mass_g)) +
 #| warning: false
 
 # boxplot + beeswarm ----
-ggplot(palmerpenguins::penguins, aes(x = species, y = body_mass_g)) +
+ggplot(penguins, aes(x = species, y = body_mass_g)) +
   geom_boxplot(outlier.shape = NA) 
 ```
 

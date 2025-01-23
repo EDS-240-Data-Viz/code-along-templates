@@ -36,7 +36,6 @@ stream_chem_all <- read_d1_files(here::here("week4", "data"))
 stream_chem_data <- stream_chem_all$data
 ```
 
-
 ## Scatter plots
 
 ### Basic scatter plot
@@ -55,6 +54,10 @@ stream_chem_data <- stream_chem_all$data
 #| echo: true
 #| warning: false
 # scatter + rug plot ----
+stream_chem_data |> 
+  filter(waterYr == 2021) |> 
+  ggplot(aes(x = DOC, y = pH)) + 
+  geom_point(alpha = 0.5)
 ```
 
 ### Alt 2: marginal plot alternatives using `{ggExtra}`
@@ -63,8 +66,11 @@ stream_chem_data <- stream_chem_all$data
 #| eval: true
 #| echo: true
 #| warning: false
-# add marginal plots with {ggExtra} ----
-# also try "density", "boxplot"
+# add marginal plots with {ggExtra}; also try "density", "boxplot" ----
+p1 <- stream_chem_data |> 
+  filter(waterYr == 2021) |> 
+  ggplot(aes(x = DOC, y = pH)) + 
+  geom_point(alpha = 0.5)
 ```
 
 ### Alt 3: scatter + marginal plot with 2+ groups
@@ -75,7 +81,11 @@ stream_chem_data <- stream_chem_all$data
 #| warning: false
 # scatter plot with points colored by site ----
 p2 <- stream_chem_data |> 
-  filter(waterYr == 2021) 
+  filter(waterYr == 2021) |> 
+  stream_chem_data |> 
+  filter(waterYr == 2021) |> 
+  ggplot(aes(x = DOC, y = pH)) + 
+  geom_point(alpha = 0.5)
 
 # add marginal density plot ----
 ```
@@ -91,7 +101,9 @@ p2 <- stream_chem_data |>
 #| echo: true
 # add a smoothed line ----
 stream_chem_data |> 
-  filter(waterYr == 2021) 
+  filter(waterYr == 2021) |> 
+  ggplot(aes(x = DOC, y = pH)) + 
+  geom_point(alpha = 0.5) 
 ```
 
 ### Line of best fit
@@ -113,11 +125,7 @@ stream_chem_data |>
 ### Bubble charts
 
 - variation of a scatter plot for visualizing a third numeric variable
-- be extra mindful:
-    - primary focus = relationship between your x- and y-axis variables 
-    - hard to compare the strengths of different associations (is there a better alternative graphic form?)
-    - if the range of values mapped to size is small, your bubbles will look indistinguishable from one another
-    - consider adjusting the size range of your scale
+- be mindful: it's challenging to interpret 3 numeric variables
     
 ```{r}
 #| eval: true
@@ -125,7 +133,9 @@ stream_chem_data |>
 #| warning: false
 # bubble chart ----
 stream_chem_data |> 
-  filter(waterYr == 2021) 
+  filter(waterYr == 2021) +
+  ggplot(aes(x = DOC, y = pH)) + 
+  geom_point(alpha = 0.5)
 ```
 
 - adjust size range of bubbles
@@ -157,7 +167,7 @@ stream_chem_data |>
   labs(x = "DOC (mg/L)", size = "Al (mg/L)", color = "Site")
 ```
 
-### Use color for third variable
+### Use color for third numeric variable
 
 ```{r}
 #| eval: true
@@ -202,6 +212,8 @@ stream_chem_data |>
 ### Initial strategies
 
 - adjust size / transparency of points
+- add a rug plot (or marginal plot)
+- color by group
 
 ```{r}
 #| eval: true
@@ -210,28 +222,6 @@ stream_chem_data |>
 # smaller + more transparent points ----
 ggplot(stream_chem_data, aes(x = SO4, y = pH)) + 
   geom_point() 
-```
-
-- add a rug plot (or marginal plot)
-
-```{r}
-#| eval: true
-#| echo: false
-#| warning: false
-# added rug plot ----
-ggplot(stream_chem_data, aes(x = SO4, y = pH)) + 
-  geom_point(size = 0.5, alpha = 0.3) 
-```
-
-- color by group
-
-```{r}
-#| eval: true
-#| echo: false
-#| warning: false
-# added rug plot ----
-ggplot(stream_chem_data, aes(x = SO4, y = pH)) + 
-  geom_point(size = 0.5, alpha = 0.3) 
 ```
 
 ### Alt 1: heatmaps

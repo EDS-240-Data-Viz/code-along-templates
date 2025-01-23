@@ -12,6 +12,8 @@ This template follows [lecture 4.1 slides](https://eds-240-data-viz.github.io/co
 
 ## Setup
 
+Data are downloaded directly from the [tidytuesday GitHub repository](https://github.com/rfordatascience/tidytuesday/tree/main/data/2019/2019-03-05).
+
 ```{r}
 #| eval: true
 #| echo: true
@@ -25,7 +27,6 @@ This template follows [lecture 4.1 slides](https://eds-240-data-viz.github.io/co
 library(tidyverse)
 
 #..........................import data...........................
-# find import code at: https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-03-05#grab-the-clean-data-here
 jobs <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-05/jobs_gender.csv")
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -34,7 +35,7 @@ jobs <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/
 
 jobs_clean <- jobs |> 
   
-  # add col with % men in a given occupation (% females in a given occupation was already included) ----
+  # add col with % men in a given occupation (% females in a given occupation is already included) ----
   mutate(percent_male = 100 - percent_female) |>
          
   # rearrange columns ----
@@ -47,7 +48,7 @@ jobs_clean <- jobs |>
   # drop rows with missing earnings data ----
   drop_na(total_earnings_male, total_earnings_female) |> 
   
-  # make occupation a factor (necessary for reordering groups in our plot) ----
+  # make occupation a factor (for reordering groups in our plot) ----
   mutate(occupation = as.factor(occupation)) |> 
  
   # classify jobs by percentage male or female (these will become facet labels in our plot) ----
@@ -165,7 +166,8 @@ subset_jobs <- rbind(f75, m75, f50) |>
   mutate(group_label = fct_relevel(group_label, 
                                    "Occupations that are 75%+ female", 
                                    "Occupations that are 45-55% female", 
-                                   "Occupations that are 75%+ male")) 
+                                   "Occupations that are 75%+ male"),
+         occupation = fct_reorder(.f = occupation, .x = total_earnings)) 
 ```
 
 ### Build dumbbell plot

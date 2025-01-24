@@ -25,6 +25,7 @@ Data are downloaded directly from the [tidytuesday GitHub repository](https://gi
 
 #..........................load packages.........................
 library(tidyverse)
+library(scales)
 
 #..........................import data...........................
 jobs <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-05/jobs_gender.csv")
@@ -83,6 +84,11 @@ jobs_clean <- jobs |>
 #| message: false
 #| warning: false
 # lollipop chart ----
+jobs_clean |> 
+  filter(year == 2016) |> 
+  slice_max(order_by = total_earnings, n = 10) |> 
+  mutate(occupation = fct_reorder(occupation, total_earnings)) |> 
+  ggplot(aes(x = occupation, y = total_earnings)) 
 ```
 
 ## An aside: when to use `geom_col()` vs. `geom_bar()`
@@ -141,7 +147,9 @@ jobs_clean |>
 jobs_clean |>
   filter(year == 2016) |>
   slice_max(order_by = total_earnings, n = 10) |>
-  mutate(occupation = fct_reorder(.f = occupation, .x = total_earnings))
+  mutate(occupation = fct_reorder(.f = occupation, .x = total_earnings)) |> 
+  pivot_longer(cols = c(total_earnings_female, total_earnings_male), names_to = "group", values_to = "earnings_by_group") |> 
+  mutate(sex = str_remove(string = group, pattern = "total_earnings_"))
 ```
 
 ## Heatmap

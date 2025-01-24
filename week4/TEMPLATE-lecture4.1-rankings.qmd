@@ -194,6 +194,7 @@ heatmap_order <- analysts |>
 
 ### (More) data wrangling
 
+- explore the difference in median salaries between male and female workers, by occupation
 - there are too many occupations to reasonably plot at once, so let's take just 10 random occupations from each group (female-dominated, male-dominated, and evenly(ish) split); we'll also only use 2016 data
 
 ```{r}

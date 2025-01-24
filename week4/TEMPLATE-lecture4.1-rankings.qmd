@@ -129,11 +129,7 @@ ggplot(jobs_clean, aes(x = major_category)) +
 jobs_clean |> 
   filter(year == 2016) |> 
   slice_max(order_by = total_earnings, n = 10) |> 
-  mutate(occupation = fct_reorder(.f = occupation, .x = total_earnings)) |> 
-  pivot_longer(cols = c(total_earnings_female, total_earnings_male), names_to = "group", values_to = "earnings_by_group") |> 
-  mutate(sex = str_remove(group, pattern = "total_earnings_")) |> 
-  ggplot(aes(x = occupation, y = earnings_by_group, fill = sex)) +
-  coord_flip()
+  mutate(occupation = fct_reorder(.f = occupation, .x = total_earnings)) 
 ```
 
 ### Lollipop chart (2 groups)
@@ -145,13 +141,7 @@ jobs_clean |>
 jobs_clean |>
   filter(year == 2016) |>
   slice_max(order_by = total_earnings, n = 10) |>
-  mutate(occupation = fct_reorder(.f = occupation, .x = total_earnings)) |> 
-  pivot_longer(cols = c(total_earnings_female, total_earnings_male), names_to = "group", values_to = "earnings_by_group") |>
-  mutate(sex = str_remove(group, pattern = "total_earnings_")) |>
-  ggplot(aes(x = occupation, y = earnings_by_group, color = sex)) +
-  geom_point() +
-  geom_linerange(aes(ymin = 0, ymax = earnings_by_group)) +
-  coord_flip()
+  mutate(occupation = fct_reorder(.f = occupation, .x = total_earnings))
 ```
 
 ## Heatmap

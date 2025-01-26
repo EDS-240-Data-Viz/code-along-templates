@@ -25,6 +25,7 @@ This template follows [lecture 4.2 slides](https://eds-240-data-viz.github.io/co
 library(metajam) 
 library(tidyverse)
 library(ggExtra)
+library(ggdensity)
 
 #...................download data from DataOne...................
 # you only need to do this once (then I recommend commenting it out)!
@@ -82,12 +83,13 @@ p2 <- stream_chem_data |>
   ggplot(aes(x = DOC, y = pH)) + 
   geom_point(alpha = 0.5)
 
+p2
 # add marginal density plot ----
 ```
 
 ## Trend lines
 
-### Default: LOESS method
+### Default (<1000 data points): LOESS method
 
 - similar to a moving average
 
@@ -105,7 +107,7 @@ p2 <- stream_chem_data |>
 # add a trend line ----
 stream_chem_data |> 
   filter(waterYr %in% c(2011:2021)) |>  
-  filter(site == "W8") |> 
+  filter(site == "W5") |> 
   ggplot(aes(x = DOC, y = pH)) + 
   geom_point(alpha = 0.5) +
   geom_smooth()
@@ -126,7 +128,8 @@ stream_chem_data |>
 stream_chem_data |> 
   filter(waterYr == 2021) |> 
   ggplot(aes(x = DOC, y = pH)) + 
-  geom_point(alpha = 0.5)
+  geom_point(alpha = 0.5) +
+  labs(x = "DOC (mg/L)", size = "Al (mg/L)", color = "Site")
 ```
 
 - adjust size range of bubbles
@@ -217,7 +220,7 @@ ggplot(stream_chem_data, aes(x = SO4, y = pH)) +
   geom_point() 
 ```
 
-### Alt 1: heatmaps
+### Alt 1: 2d heatmaps
 
 - e.g. like you're looking down on a histogram
 

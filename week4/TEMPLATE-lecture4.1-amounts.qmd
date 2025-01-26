@@ -169,17 +169,17 @@ analysts <- jobs_clean |>
   filter(str_detect(string = occupation, pattern = "analyst")) |> 
   select(year, occupation, total_earnings)
 
-# determine order of occupations based on highest total_earnings in 2016 ----
-order_2016 <- analysts |> 
-  filter(year == 2016) |> 
-  arrange(total_earnings) |> 
-  mutate(order = row_number()) |> 
-  select(occupation, order) 
-
-# join order with rest of data to set factor levels ----
-heatmap_order <- analysts |> 
-  left_join(order_2016, by = "occupation") |> 
-  mutate(occupation = fct_reorder(occupation, order))
+# # determine order of occupations based on highest total_earnings in 2016 ----
+# order_2016 <- analysts |> 
+#   filter(year == 2016) |> 
+#   arrange(total_earnings) |> 
+#   mutate(order = row_number()) |> 
+#   select(occupation, order) 
+# 
+# # join order with rest of data to set factor levels ----
+# heatmap_order <- analysts |> 
+#   left_join(order_2016, by = "occupation") |> 
+#   mutate(occupation = fct_reorder(occupation, order))
 ```
 
 ```{r}

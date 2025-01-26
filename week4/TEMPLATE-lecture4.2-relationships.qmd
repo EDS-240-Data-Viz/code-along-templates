@@ -4,6 +4,8 @@ subtitle: "Visualizing numerical relationships"
 author: "Your Name"
 date: 2025-01-27
 toc: true
+editor_options: 
+  chunk_output_type: inline
 ---
 
 ::: {.callout-note}
@@ -22,6 +24,7 @@ This template follows [lecture 4.2 slides](https://eds-240-data-viz.github.io/co
 #..........................load packages.........................
 library(metajam) 
 library(tidyverse)
+library(ggExtra)
 
 #...................download data from DataOne...................
 # you only need to do this once (then I recommend commenting it out)!
@@ -55,6 +58,7 @@ stream_chem_data <- stream_chem_all$data
 #| echo: true
 #| warning: false
 # scatter + rug plot ----
+p1
 ```
 
 ### Alt 2: marginal plot alternatives using `{ggExtra}`
@@ -91,11 +95,6 @@ p2 <- stream_chem_data |>
 #| eval: true
 #| echo: true
 # add a smoothed line ----
-stream_chem_data |> 
-  filter(waterYr == 2021) |> 
-  filter(site == "W8") |> 
-  ggplot(aes(x = DOC, y = pH)) + 
-  geom_point(alpha = 0.5) 
 ```
 
 ### Line of best fit
@@ -105,10 +104,11 @@ stream_chem_data |>
 #| echo: true
 # add a trend line ----
 stream_chem_data |> 
-  filter(waterYr == 2021) |> 
+  filter(waterYr %in% c(2011:2021)) |>  
   filter(site == "W8") |> 
   ggplot(aes(x = DOC, y = pH)) + 
-  geom_point(alpha = 0.5) 
+  geom_point(alpha = 0.5) +
+  geom_smooth()
 ```
 
 ## Visualizing a third numeric variable
@@ -170,6 +170,8 @@ stream_chem_data |>
   geom_point(alpha = 0.5, size = 2) +
   labs(x = "DOC (mg/L)")
 ```
+
+### But oftentimes best to just create two different plots
 
 ```{r}
 #| eval: true

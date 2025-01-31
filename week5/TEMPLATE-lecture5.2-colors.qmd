@@ -35,11 +35,15 @@ cat_color_plot <- ggplot(na.omit(penguins),
                              color = species, shape = species)) +
   geom_point(size = 4, alpha = 0.8)
 
+cat_color_plot
+
 # requires continuous color scale ----
 con_color_plot <- ggplot(na.omit(penguins), 
                          aes(x = bill_length_mm, y = bill_depth_mm, 
                              color = body_mass_g)) +
   geom_point(size = 4, alpha = 0.8) 
+
+con_color_plot
 ```
 
 ## Colors for inclusive & accessible design
@@ -57,7 +61,7 @@ con_color_plot <- ggplot(na.omit(penguins),
 cat_color_plot 
 
 # continuous color scales ----
-cont_color_plot
+con_color_plot
 ```
 
 ### RColorBrewer scales
@@ -90,10 +94,10 @@ RColorBrewer::brewer.pal()
 cat_color_plot 
 
 # for unclassed continuous color scales ----
-cont_color_plot
+con_color_plot
 
 # for classed continuous color scales ----
-cont_color_plot
+con_color_plot
 ```
 
 ### Accessibility tips
@@ -150,10 +154,10 @@ View(palettes_c_names)
 cat_color_plot 
 
 # continuous data / palette (unclassed) ----
-cont_color_plot 
+con_color_plot 
 
 # continuous data / palette (classed) ----
-cont_color_plot 
+con_color_plot 
 ```
 
 ### II. create vector of colors using `paletteer_*()`, then apply using the appropriate `ggplot::scale_*()` function
@@ -191,10 +195,10 @@ ggplot(penguins, aes(x = body_mass_g, fill = species)) +
 # create palette ----
 
 # apply to scatter plot as an unclassed palette (use `gradientn` variant) ---- 
-cont_color_plot
+con_color_plot
 
 # apply to scatter plot as a classed (binned) palette (use `stepsn` variant) ---- 
-cont_color_plot 
+con_color_plot 
 ```
 
 ## Subduing pure hues
@@ -238,6 +242,8 @@ ggplot(penguins, aes(x = species)) +
 #| eval: true
 #| echo: true
 #| warning: false
+# create palette ----
+
 # plot with custom palette ----
 cat_color_plot +
   scale_color_manual(values = c("#32DE8A", "#E36414", "#0F4C5C")) 

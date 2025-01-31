@@ -13,7 +13,7 @@ This template follows [lecture 5.3 slides](https://eds-240-data-viz.github.io/co
 ## Setup
 
 ```{r}
-#| eval: false
+#| eval: true
 #| echo: true
 #| warning: false
 #| message: false
@@ -24,15 +24,20 @@ This template follows [lecture 5.3 slides](https://eds-240-data-viz.github.io/co
 #..........................load packages.........................
 library(tidyverse)
 library(tigris)
+library(sf)
+library(RColorBrewer)
+library(scales)
 
 #.........................get shape data.........................
 county_geo <- tigris::counties(class = "sf", cb = TRUE) |> # cb = TRUE to use cartographic boundary files
   
-  # shift US to fit AK, HI, PR (we'll be filtering these out though) and transform CRS to USA Contiguous Albers Equal Area Conic (ESRI:102003) ----
-  shift_geometry()
+  # transform CRS to USA Contiguous Albers Equal Area Conic ----
+  # see https://gis.stackexchange.com/questions/141580/which-projection-is-best-for-mapping-the-contiguous-united-states
+  sf::st_transform("ESRI:102003")
 
 #....................import precipitation data...................
-precip_data <- read_csv(here::here("week5", "data", "county-feb19-jan24-precip.csv"), skip = 4)
+precip_data <- read_csv(here::here("week5", "data", "county-jan20-dec24-precip.csv"), 
+                        skip = 4)
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##                               data wrangling                             ----
@@ -50,10 +55,9 @@ county_geo_wrangled <- county_geo |>
   # rename county & state cols ----
   rename(county = namelsad, state = state_name) |>
   
-  # remove states / territories that we don't have precip data for ----
-  filter(!state %in% c("Alaska", "Hawaii", "District of Columbia",
-                       "United States Virgin Islands", "Puerto Rico", "American Samoa",
-                       "Commonwealth of the Northern Mariana Islands", "Guam")) |>
+  # keep only 50 US states (minus AK & HI) ----
+  filter(state %in% state.name) |> # `state.name` is a build-in vector of the 50 US States
+  filter(!state %in% c("Alaska", "Hawaii")) |> 
   
   # capitalize "city" (VA) ----
   mutate(county = str_replace(string = county, pattern = " city", replacement = " City"))
@@ -80,7 +84,7 @@ precip_wrangled <- precip_data |>
   mutate(value = as.numeric(value),
          x1901_2000_mean = as.numeric(x1901_2000_mean)) |>
   
-  # calculate % change ----
+  # calculate % change in precip from 20th century avg ----
   mutate(perc_change = ((value - x1901_2000_mean)/x1901_2000_mean)*100) |>
   
   # select, rename, reorder cols ----
@@ -90,7 +94,7 @@ precip_wrangled <- precip_data |>
 ##  ~ join dfs  ----
 ##~~~~~~~~~~~~~~~~~~
 
-# join dfs (be sure to join precip TO sf object, not the other way around) -------
+# join dfs (be sure to join precip TO sf object, not the other way around; see https://github.com/tidyverse/ggplot2/issues/3936 & https://map-rfun.library.duke.edu/032_thematic_mapping_geom_sf.html)) -------
 joined_precip_geom <- full_join(county_geo_wrangled, precip_wrangled) 
 ```
 
@@ -112,6 +116,7 @@ joined_precip_geom <- full_join(county_geo_wrangled, precip_wrangled)
 #| eval: true
 #| echo: true
 # preview palette ----
+RColorBrewer::display.brewer.pal(n = 11, name = 'BrBG')
 
 # save HEX codes as vector ----
 ```
@@ -132,6 +137,7 @@ joined_precip_geom <- full_join(county_geo_wrangled, precip_wrangled)
 #| eval: true
 #| echo: true
 # preview palette ----
+RColorBrewer::display.brewer.pal(n = 10, name = 'BrBG')
 
 # save HEX codes as vector ----
 ```

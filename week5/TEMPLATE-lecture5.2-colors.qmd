@@ -36,9 +36,9 @@ cat_color_plot <- ggplot(na.omit(penguins),
   geom_point(size = 4, alpha = 0.8)
 
 # requires continuous color scale ----
-cont_color_plot <- ggplot(na.omit(penguins), 
-                          aes(x = bill_length_mm, y = bill_depth_mm, 
-                              color = body_mass_g)) +
+con_color_plot <- ggplot(na.omit(penguins), 
+                         aes(x = bill_length_mm, y = bill_depth_mm, 
+                             color = body_mass_g)) +
   geom_point(size = 4, alpha = 0.8) 
 ```
 
@@ -109,7 +109,7 @@ ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = body_mass_g)
   scale_color_distiller(palette = "BuPu")
 ```
 
-- use redundant mapping (colors & shapes) whenever possible (recall our original plot, with an added viridis color palette)
+- use redundant mapping (colors & shapes) whenever possible 
 
 ```{r}
 #| eval: true
@@ -122,12 +122,30 @@ ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
 
 ## Paletteer
 
+```{r}
+#| eval: true
+#| echo: true
+# import {paletteer} ----
+library(paletteer)
+```
+
+Explore available packages in the form of built-in data frames:
+
+```{r}
+#| eval: false
+#| echo: true
+# view names of supported pkgs/palettes ----
+View(palettes_d_names)
+View(palettes_c_names)
+```
+
 ### I. apply palette using `scale_*_paletteer_*()`
 
 ```{r}
 #| eval: true
 #| echo: true
 #| warning: false
+
 # discrete data / palette ----
 cat_color_plot 
 
@@ -147,6 +165,9 @@ cont_color_plot
 #| echo: true
 #| warning: false
 #| message: false
+# view names of pkgs/palettes ----
+# View(palettes_d_names)
+
 # create palette ----
 
 # apply to scatter plot (use `color` variant) ----
@@ -164,6 +185,9 @@ ggplot(penguins, aes(x = body_mass_g, fill = species)) +
 #| echo: true
 #| warning: false
 #| message: false
+# view names of pkgs/palettes ----
+# View(palettes_c_names)
+
 # create palette ----
 
 # apply to scatter plot as an unclassed palette (use `gradientn` variant) ---- 
@@ -243,16 +267,42 @@ penguins |>
 
 ### Use `scale_*_identity()`
 
+- Ex 1: color points based on value
+
 ```{r}
 #| eval: true
 #| echo: true
 #| warning: false
-# example 1 (color points based on value) ----
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
-  geom_point(size = 4, alpha = 0.8) 
+# example 1 ----
+penguins_ex1 <- penguins |> 
+  mutate(
+    my_color = case_when(
+      bill_length_mm < 40 ~ "#D7263D",
+      between(x = bill_length_mm, left = 40, right = 50) ~ "#E4BB97",
+      bill_length_mm > 50 ~ "#386150"
+    )
+  )
 
-# example 2 (highlight points based on criteria)
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
-  geom_point(size = 4, alpha = 0.8)
+ggplot(penguins_ex1, aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point(size = 4, alpha = 0.8) 
+```
+
+- Ex 2: color points based on criteria
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+# example 2 ----
+penguins_ex2 <- penguins |> 
+  mutate(
+    my_color = case_when(
+      body_mass_g > 6000 ~ "#D7263D",
+      TRUE ~ "gray50"
+    )
+  )
+
+ggplot(penguins_ex2, aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point(size = 4, alpha = 0.8) 
 ```
 

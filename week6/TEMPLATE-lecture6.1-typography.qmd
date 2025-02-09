@@ -55,6 +55,9 @@ Our "first draft" of this plot began in week 4 during our amounts / rankings lec
 
 #..........................load packages.........................
 library(tidyverse)
+library(showtext)
+library(glue)
+library(ggtext)
 
 #......................import Google fonts.......................
 # `name` is the name of the font as it appears in Google Fonts
@@ -177,18 +180,24 @@ plot
 #| echo: true
 #| warning: false
 # create a named color palette ----
+# to avoid some annoying typing, feel free to copy these into our palette vector:
+# "males" = "#2D7787", "females" = "#FC6B4B",  "dark_text" = "#0C1509", "light_text" = "#4E514D"
 
 # preview it ----
 ```
 
-## Update plot colors
+## Update plot colors & fonts
 
 ```{r}
 #| eval: true
 #| echo: true
 #| warning: false
 #| out-width: "100%"
-# update plot colors using palette ----
+#.........................create caption.........................
+
+#........................create subtitle.........................
+
+#..........................updated plot..........................
 plot <- ggplot(subset_jobs) +
   
   # create dumbbells ----
@@ -209,21 +218,6 @@ plot <- ggplot(subset_jobs) +
                      breaks = c(25000, 50000, 75000, 100000))
 
 plot
-```
-
-## Add titles & theme
-
-```{r}
-#| eval: true
-#| echo: true
-#| warning: false
-#| out-width: "100%"
-#.........................create caption.........................
-
-#........................create subtitle.........................
-
-#..........................updated plot..........................
-
 ```
 
 ## Save plot as a PNG file

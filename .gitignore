@@ -52,5 +52,5 @@ rsconnect/
 **/.DS_Store
 
 week*/data/
-week4/metajam.log
-week4-old/
+OLD/
+data/

@@ -1,13 +1,12 @@
 ---
-title: "Lecture 4.1 TEMPLATE"
-subtitle: "Visualizing amounts / rankings"
+title: "TEMPLATE - visualizing amounts / rankings"
 author: "Your Name"
-date: 2025-01-27
+date: 2026-01-21
 toc: true
 ---
 
 ::: {.callout-note}
-This template follows [lecture 4.1 slides](https://eds-240-data-viz.github.io/course-materials/lecture-slides/lecture4.1-amounts-slides.html#/title-slide){target="_blank"}.
+This template follows [lecture 4.1 slides](https://eds-240-data-viz.github.io/course-materials/lecture-slides/lecture4.1-amounts-slides.html#/title-slide){target="_blank"}. Please be sure to cross-reference the slides, which contain important information and additional context!
 :::
 
 ## Setup

@@ -6,12 +6,14 @@ toc: true
 ---
 
 ::: {.callout-note}
-This template follows [lecture 2.3 slides](https://eds-240-data-viz.github.io/course-materials/lecture-slides/lecture2.3-evolution-slides.html#/title-slide){target="_blank}. Please be sure to cross-reference the slides, which contain important information and additional context!
+This template follows the [visualizing evolution](https://eds-240-data-viz.github.io/course-materials/lecture-slides/SLIDES-evolution.html#/title-slide){target="_blank}. Please be sure to cross-reference the slides, which contain important information and additional context!
 :::
 
 ## Setup
 
-**Note:** `{tidycensus}` functions (e.g. `get_estimates()`) internally call `Sys.getenv("CENSUS_API_KEY)` to retrieve your key from `.Renviron`. This means you don't need to explicitly call `Sys.getenv("CENSUS_API_KEY)` in your code -- `{tidycensus}` handles that for you!
+::: {.callout-note}
+`{tidycensus}` functions (e.g. `get_estimates()`) internally call `Sys.getenv("CENSUS_API_KEY)` to retrieve your key from `.Renviron`. This means you don't need to explicitly call `Sys.getenv("CENSUS_API_KEY)` in your code -- `{tidycensus}` handles that for you!
+:::
 
 ```{r}
 #| eval: true
@@ -30,7 +32,7 @@ library(gghighlight)
 library(scales)
 
 #..........................import data...........................
-lyme <- read_csv(here::here("week2", "data", "Lyme_Disease_Cases_by_State_or_Locality.csv"))
+lyme <- read_csv(here::here("week3", "data", "2023_CaseIncid-Lyme-Disease-Cases-by-State-or-Locality.csv"))
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##                          wrangle lyme disease data                       ----
@@ -48,7 +50,7 @@ lyme_clean <- lyme |>
   filter(state != "U.S. Total") |> 
   
   # wide to long (tidy) years ----
-  pivot_longer(cols = 2:16, names_to = "year", values_to = "reported_cases") |> 
+  pivot_longer(cols = 2:17, names_to = "year", values_to = "reported_cases") |> 
   
   # reorder columns ----
   relocate(year, state, reported_cases) |> 
@@ -71,7 +73,7 @@ us_state_pop <- get_estimates(geography = "state",
 
 #........................write data to csv.......................
 # OPTIONAL, but recommended in case you want to work offline, the API is down, etc. (you can then read in your saved data file rather than run the above code)
-# write_csv(us_state_pop, file = here::here("week2", "data", "us_state_pop.csv"))  
+# write_csv(us_state_pop, file = here::here("week3", "data", "us_state_pop.csv"))  
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##                            join lyme & pop dfs                           ----
@@ -96,7 +98,9 @@ lyme_pop <- left_join(lyme_clean, us_state_pop) |>
 # line chart ----
 ```
 
-### Alt 1: Avoid spaghetti plots 
+### Avoid spaghetti plots 
+
+- highlight groups or values of interest to focus attention
 
 ```{r}
 #| eval: true
@@ -114,6 +118,8 @@ ggplot(lyme_pop, aes(x = year, y = cases_per100k, group = state)) +
 ```
 
 ### Note 1: It's okay to cut the y-axis
+
+- line graphs encode data **by position** and **not length**
 
 ```{r}
 #| eval: true
@@ -136,7 +142,11 @@ lyme_pop |>
   scale_y_continuous(limits = c(0, NA))
 ```
 
-### Note 2: Consider aspect ratio
+### Note 2: Consider aspect ratio (height:width ratio)
+
+::: {.callout-note}
+We’ve added tick marks for every value on the y-axis on the plot below to help visualize differences in aspect ratio – you would not typically present a plot in this way
+:::
 
 - here, 10 units on our x-axis (years 2010 - 2020), and ~175 units (case_per100k 0 to ~175) on our y-axis
 - ggplot automatically adjusts aspect ratio so that plot is easier to read 
@@ -152,7 +162,7 @@ lyme_pop |>
   scale_y_continuous(breaks = seq(0, 190, by = 1)) 
 ```
 
-- we can fix the aspect ratio of our plot
+- we can **fix** the aspect ratio of our plot (i.e. height of one y-unit is equal to the width of one x-unit)
 - `ratio` is expressed as `y / x` and is set to `1` by default (see grid lines)
 
 ```{r}
@@ -166,8 +176,9 @@ lyme_pop |>
   scale_y_continuous(breaks = seq(0, 190, by = 1)) 
 ```
 
-- ratios > 1: units on the y-axis longer than units on the x-axis (resulting in steeper slopes) 
-- ratios < 1: units on the x-axis longer than units on the y-axis (resulting in shallower slopes)
+- we can adjust the aspect ratio by updating the value supplied to the ratio argument:
+  - ratios > 1: units on the y-axis longer than units on the x-axis (resulting in steeper slopes) 
+  - ratios < 1: units on the x-axis longer than units on the y-axis (resulting in shallower slopes)
 
 ```{r}
 #| eval: true
@@ -191,7 +202,7 @@ lyme_pop |>
   filter(state == "New Jersey")
 ```
 
-## Stacked area charts 
+### Alternative: stacked area charts 
 
 - show evolution of the whole + relative proportions of each group
 
@@ -203,7 +214,7 @@ lyme_pop |>
   filter(state %in% c("Maine", "Rhode Island", "New Hampshire", "Vermont")) 
 ```
 
-### Alt 1: proportional stacked area chart
+### Alternative: proportional stacked area chart
 
 - plot percentage contributions rather than absolute numbers on y-axis
 
@@ -218,6 +229,8 @@ lyme_pop |>
 ```
 
 ### Note 1: stacked area charts aren't great for looking at evolution of individual groups
+
+- the stacked area chart and faceted line graph both show the same data
 
 ```{r}
 #| eval: true

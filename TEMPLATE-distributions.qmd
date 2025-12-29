@@ -6,14 +6,12 @@ toc: true
 ---
 
 ::: {.callout-note}
-This template follows the [visualizing-distributions slides](https://eds-240-data-viz.github.io/course-materials/lecture-slides/SLIDES-distributions.html){target="_blank}. Please be sure to cross-reference the slides, which contain important information and additional context!
+This template follows the [visualizing distributions slides](https://eds-240-data-viz.github.io/course-materials/lecture-slides/SLIDES-distributions.html){target="_blank}. Please be sure to cross-reference the slides, which contain important information and additional context!
 :::
 
 ## Setup
 
-- download data & explore metadata on the [EDI Data Portal](https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-sbc&identifier=2007) 
-
-```{r setup-echo}
+```{r setup}
 #| eval: true
 #| echo: true
 #| message: false
@@ -122,7 +120,7 @@ ggplot(dummy_data, aes(x = value, fill = group)) +
 
 ### Avoid plotting too many groups
 
-```{r}
+```{r too-many-groups}
 #| eval: true
 #| echo: true
 #| warning: false
@@ -144,7 +142,7 @@ mko_clean |>
 
 ### Consider faceting (small multiples)
 
-```{r too-many-groups}
+```{r faceting}
 #| eval: true
 #| echo: true
 #| warning: false

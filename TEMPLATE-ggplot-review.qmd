@@ -187,6 +187,8 @@ penguin_summary <- penguins |>
 ```{r}
 #| warning: false
 #........................default position........................
+ggplot(penguins, aes(x = species)) +
+  geom_bar()
 ```
 
 ### Example 4 & 5 (override default position adjustments)

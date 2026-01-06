@@ -6,7 +6,7 @@ toc: true
 ---
 
 ::: {.callout-note}
-This template follows the [`{ggplot2}` review slides](https://eds-240-data-viz.github.io/course-materials/lecture-slides/lecture1.3-ggplot-review-slides.html#/title-slide){target="_blank}. Please be sure to cross-reference the slides, which contain important information and additional context!
+This template follows the [`{ggplot2}` review slides](https://eds-240-data-viz.github.io/course-materials/lecture-slides/SLIDES-ggplot-review#/title-slide){target="_blank}. Please be sure to cross-reference the slides, which contain important information and additional context!
 :::
 
 ## Setup

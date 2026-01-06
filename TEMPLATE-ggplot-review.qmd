@@ -70,14 +70,14 @@ Explore the relationship between penguin **bill length** and **bill depth**. Our
 
 ```{r}
 #| warning: false
-#..........scatterplott with custom categorical colors...........
+#..........scatter plot with custom categorical colors...........
 ```
 
 ### Example 2 (mapping color to continuous variable)
 
 ```{r}
 #| warning: false
-#...........scatterplott with custom continuous colors...........
+#...........scatter plot with custom continuous colors...........
 ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm)) + 
   geom_point()
 ```

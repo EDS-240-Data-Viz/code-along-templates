@@ -18,6 +18,7 @@ This template follows the [`{ggplot2}` review slides](https://eds-240-data-viz.g
 #| warning: false
 # load packages ----
 library(tidyverse)
+library(patchwork)
 library(palmerpenguins)
 ```
 
@@ -280,4 +281,43 @@ Explore **penguin flipper lengths**. Our goals are to review:
 #| warning: false
 #| message: false
 #......................labels & facet wrap.......................
+```
+
+## Plot #4
+
+Combine individual plots into a single graphic using `{patchwork}`:
+
+1. Save plots to object names
+
+```{r}
+#.................save scatter plot to obj `p1`..................
+p1 <- ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = body_mass_g)) +
+  geom_point() +
+  scale_color_gradient(low = "#F7DD4C", high = "#132B43") +
+  theme(
+    legend.position = "top" # note: this is newly added from earlier!
+  )
+
+#....................save bar plot to obj `p2`...................
+p2 <- ggplot(penguins, aes(x = species)) +
+  geom_bar() +
+  theme_light()
+
+#...................save histogram to obj `p3`...................
+p3 <- ggplot(penguins, aes(x = flipper_length_mm, fill = species)) + 
+  geom_histogram(position = "identity", alpha = 0.5) +
+  scale_fill_manual(values = c("darkorange", "purple", "cyan4"))
+```
+
+2. Assemble single graphic
+
+```{r}
+#| warning: false
+#| message: false
+#..........................stacked plots.........................
+
+#.......................side-by-side plots.......................
+
+#..........side-by-side & stacked plots + graphic title..........
+
 ```

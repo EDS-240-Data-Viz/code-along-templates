@@ -126,10 +126,7 @@ ggplot(dummy_data, aes(x = value, fill = group)) +
 #..................histogram with all 12 months..................
 
 #................density plot with all 12 months.................
-mko_clean |> 
-  mutate(month_name = factor(x = month_name, levels = month.name)) |> 
-  ggplot(aes(x = Temp_bot, fill = month_name)) +
-  geom_density(alpha = 0.5)
+
 ```
 
 ### Consider faceting (small multiples)
@@ -221,6 +218,8 @@ What should you carefully consider when checking the smoothing asumptions of you
 ## Boxplots
 
 - great for *summarizing* the distribution of a numeric variable for multiple to many groups
+- consider flipping your axes when you have long labels
+- consider highlighting a group(s) of interest to focus attention
 
 ```{r basic-boxplot}
 #| eval: true
@@ -234,20 +233,6 @@ What should you carefully consider when checking the smoothing asumptions of you
 ## Question:
 What are the tradeoffs between reordering groups within a ggplot (as above) vs. during the data wrangling stage (e.g. as we did for our histogram and density and ridgeline plots)?
 :::
-
-### Highlight group(s) of interest to focus attention
-
-```{r boxplot-highlight}
-#| eval: true
-#| echo: true
-#| warning: false
-
-#..................highlight a particular group..................
-ggplot(mko_clean, aes(x = month_name, y = Temp_bot)) +
-  geom_boxplot() +
-  scale_x_discrete(limits = rev(month.name)) +
-  coord_flip() 
-```
 
 ### Overlay jittered data, if appropriate 
 

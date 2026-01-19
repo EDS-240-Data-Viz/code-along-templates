@@ -87,38 +87,37 @@ After building some basic plots, we'll practice:
 #| message: false
 #| layout-ncol: 2
 
-# bar plot ----
+#............................bar plot............................
 
-# lollipop plot ----
+#..........................lollipop plot.........................
 
 ```
 
 ## Note 1: `geom_col()` vs. `geom_bar()`
 
-Use `geom_col()` when you want the heights of your bars to represent values in your data:
+- Use `geom_col()` when you want the heights of your bars to represent values in your data
+- Use `geom_bar()` if you want the heights of your bars to be proportional to the number of cases in each group
 
 ```{r}
 #| eval: true
 #| echo: true
-# `geom_col()` example ----
+#| layout-ncol: 2
+#.......................geom_col() example.......................
+# How does mean SUI compare across subregions?
 ca_region |> 
   group_by(subregion_name) |> 
-  summarise(mean_sui_2010_2020 = mean(sui_frac, na.rm = TRUE)) 
-```
+  summarise(mean_sui_2010_2020 = mean(sui_frac, na.rm = TRUE)) |> 
+  ggplot(aes(x = mean_sui_2010_2020, y = subregion_name)) + 
+  geom_col()
 
-Use `geom_bar()` if you want the heights of your bars to be proportional to the number of cases in each group:
-
-```{r}
-#| eval: true
-#| echo: true
-# `geom_bar()` example ----
-
+#.......................geom_bar() example.......................
+# How many observations (rows) exist for each subregion?
 ```
 
 ## Stacked Bar Plots
 
 - great for part-to-whole comparisons
-- use a percentage stacked bar char twhen you want the focus to be on relative proportions
+- use a percentage stacked bar chart when you want the focus to be on relative proportions
 - encode values by LENGTH
 
 ***Our goal:** create a stacked bar chart that shows how CA subwatersheds (HUC 12s) are distributed across SUI categories*
@@ -130,9 +129,9 @@ First we need to do a bit of wrangling:
 #| echo: true
 #| message: false
 
-# find total # of SUI obs per month ----
+#................find total # of SUI obs per month...............
 
-# create df classifying SUI values ----
+#................create df classifying SUI values................
 sui_severity <- ca_region |>
   mutate(
     sui_category = case_when(
@@ -144,15 +143,30 @@ sui_severity <- ca_region |>
       TRUE ~ NA
     )) |> 
   group_by(month, sui_category) |> 
-  summarize(tot_sui_per_cat = n()) |> 
+  summarize(tot_num_sui = n()) |> 
   drop_na(sui_category) |> 
-  left_join(tot_sui_per_month) |> 
   mutate(month = month.abb[month],
-         month = factor(month, levels = c(month.abb[10:12], month.abb[1:9]))) |> 
-  mutate(perc = (tot_sui_per_cat/tot_sui_per_month) * 100) |> 
-  mutate(sui_category = factor(sui_category, 
-                               levels = c("Very low", "Low",
-                                          "Moderate", "High", "Severe")))
+         month = factor(month, levels = c(month.abb[10:12], month.abb[1:9]))) # order months Oct > Sep (water year)
+# sui_severity <- ca_region |>
+#   mutate(
+#     sui_category = case_when(
+#       sui_frac < 0.2 ~ "Very low",
+#       sui_frac >= 0.2 & sui_frac < 0.4 ~ "Low",
+#       sui_frac >= 0.4 & sui_frac < 0.6 ~ "Moderate",
+#       sui_frac >= 0.6 & sui_frac < 0.8 ~ "High",
+#       sui_frac >= 0.8 & sui_frac <= 1 ~ "Severe",
+#       TRUE ~ NA
+#     )) |> 
+#   group_by(month, sui_category) |> 
+#   summarize(tot_sui_per_cat = n()) |> 
+#   drop_na(sui_category) |> 
+#   left_join(tot_sui_per_month) |> 
+#   mutate(month = month.abb[month],
+#          month = factor(month, levels = c(month.abb[10:12], month.abb[1:9]))) |> 
+#   mutate(perc = (tot_sui_per_cat/tot_sui_per_month) * 100) |> 
+#   mutate(sui_category = factor(sui_category, 
+#                                levels = c("Very low", "Low",
+#                                           "Moderate", "High", "Severe")))
 ```
 
 Then create a stacked bar plot:
@@ -161,7 +175,7 @@ Then create a stacked bar plot:
 #| eval: true
 #| echo: true
 
-# create color palette ----
+#......................create color palette......................
 # pulled hex codes from USGS map using ColorZilla Chrome extension
 sui_colors <- c("Severe" = "#720C0F", 
                 "High" = "#F68939", 
@@ -169,13 +183,13 @@ sui_colors <- c("Severe" = "#720C0F",
                 "Low" = "#AAD9EA", 
                 "Very low" = "#217AB5")
 
-# % stacked bar chart ----
+#......................% stacked bar chart.......................
 
 ```
 
 ## Heatmaps
 
-- great for visulizing matrices of data (e.g. 2 categorical + 1 numeric)
+- great for visualizing matrices of data (e.g. 2 categorical + 1 numeric)
 - focus is on patterns rather than precise amounts
 - consider audience familiarity (may require more explanation than a basic bar plot)
 - encodes values using COLOR
@@ -187,11 +201,13 @@ First, we need to do a bit of wrangling:
 ```{r}
 #| eval: true
 #| echo: true
-# df of annual mean SUI by subregion & year ----
+#| message: false
+#| warning: false
+#............df of annual mean SUI by subregion & year...........
 
-# determine order of subregions based on highest avg SUI in 2015 ----
+#.determine order of subregions based on highest avg SUI in 2015.
 
-# join order with rest of data to set factor levels ----
+#........join order with rest of data to set factor levels.......
 
 ```
 
@@ -200,7 +216,7 @@ Then, create heatmap:
 ```{r}
 #| eval: true
 #| echo: false
-# create heatmap ----
+#.........................create heatmap.........................
 
 ```
 
@@ -222,7 +238,7 @@ First, we need to do a bit of wrangling:
 ```{r}
 #| eval: true
 #| echo: true
-# df mean water avail vs. consum in HUC 18060013 ----
+#.........df mean water avail vs. consum in HUC 18060013.........
 sbc_subbasin_monthly <- ca_region |> 
   mutate(subbasin_HUC = str_sub(string = huc12_id, start = 1, end = 8)) |> 
   filter(subbasin_HUC == "18060013") |> 
@@ -230,12 +246,12 @@ sbc_subbasin_monthly <- ca_region |>
   summarize(mean_avail = mean(availab_mm_mo, na.rm = TRUE),
             mean_consum = mean(consum_mm_mo, na.rm = TRUE)) |> 
   mutate(month = month.abb[month],
-          month = factor(month, levels = c(month.abb[10:12], month.abb[1:9])))
+          month = factor(month, levels = rev(c(month.abb[10:12], month.abb[1:9]))))
 ```
 
 Then, create dumbbell plot: 
 
 ```{r}
-# create dumbbell plot ----
+#......................create dumbbell plot......................
 
 ```

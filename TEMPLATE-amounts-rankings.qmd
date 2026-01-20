@@ -182,6 +182,9 @@ First, we need to do a bit of wrangling:
 #| message: false
 #| warning: false
 #............df of annual mean SUI by subregion & year...........
+heatmap_data <- ca_region |> 
+  group_by(subregion_name, year) |> 
+  summarize(annual_mean_sui = mean(sui_frac, na.rm = TRUE))
 
 #.determine order of subregions based on highest avg SUI in 2015.
 

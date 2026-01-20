@@ -129,8 +129,6 @@ First we need to do a bit of wrangling:
 #| echo: true
 #| message: false
 
-#................find total # of SUI obs per month...............
-
 #................create df classifying SUI values................
 sui_severity <- ca_region |>
   mutate(

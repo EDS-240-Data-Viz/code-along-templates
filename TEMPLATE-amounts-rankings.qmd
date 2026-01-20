@@ -147,26 +147,6 @@ sui_severity <- ca_region |>
   drop_na(sui_category) |> 
   mutate(month = month.abb[month],
          month = factor(month, levels = c(month.abb[10:12], month.abb[1:9]))) # order months Oct > Sep (water year)
-# sui_severity <- ca_region |>
-#   mutate(
-#     sui_category = case_when(
-#       sui_frac < 0.2 ~ "Very low",
-#       sui_frac >= 0.2 & sui_frac < 0.4 ~ "Low",
-#       sui_frac >= 0.4 & sui_frac < 0.6 ~ "Moderate",
-#       sui_frac >= 0.6 & sui_frac < 0.8 ~ "High",
-#       sui_frac >= 0.8 & sui_frac <= 1 ~ "Severe",
-#       TRUE ~ NA
-#     )) |> 
-#   group_by(month, sui_category) |> 
-#   summarize(tot_sui_per_cat = n()) |> 
-#   drop_na(sui_category) |> 
-#   left_join(tot_sui_per_month) |> 
-#   mutate(month = month.abb[month],
-#          month = factor(month, levels = c(month.abb[10:12], month.abb[1:9]))) |> 
-#   mutate(perc = (tot_sui_per_cat/tot_sui_per_month) * 100) |> 
-#   mutate(sui_category = factor(sui_category, 
-#                                levels = c("Very low", "Low",
-#                                           "Moderate", "High", "Severe")))
 ```
 
 Then create a stacked bar plot:

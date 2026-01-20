@@ -212,7 +212,7 @@ How else might you consider ordering these groups?
 - shows exact values, but focus is on the difference between values
 - encode values using POSITION
 
-***Our goal:** create a dumbbell chart to compare long-term mean water availability and consumption in the Santa Barbara Coastal subbasin (HUC8: 18060013; 2010-2020).*
+***Our goal:** create a dumbbell chart to compare mean monthly water availability and consumption in the Santa Barbara Coastal subbasin (HUC8: 18060013) across the years 2010-2020.*
 
 First, we need to do a bit of wrangling:
 

@@ -8,10 +8,12 @@ editor_options:
 ---
 
 ::: {.callout-note}
-This template follows [relationships](https://eds-240-data-viz.github.io/course-materials/lecture-slides/SLIDES-relationships.html#/title-slide){target="_blank"}. Please be sure to cross-reference the slides, which contain important information and additional context!
+This template follows [relationships slides](https://eds-240-data-viz.github.io/course-materials/lecture-slides/SLIDES-relationships.html#/title-slide){target="_blank"}. Please be sure to cross-reference the slides, which contain important information and additional context!
 :::
 
 ## Setup
+
+Data are downloaded from [DataOne](https://search.dataone.org/view/https%3A%2F%2Fpasta.lternet.edu%2Fpackage%2Fmetadata%2Feml%2Fknb-lter-hbr%2F208%2F14){target="_blank} (find instructions for getting the download link on the [`{metajam}` package README](https://github.com/NCEAS/metajam?tab=readme-ov-file#how-to-get-the-url-to-your-dataset-of-interest-){target="_blank}).
 
 ```{r}
 #| eval: false

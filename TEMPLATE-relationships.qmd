@@ -81,7 +81,7 @@ p1
 #| warning: false
 #............scatter plot with points colored by site............
 p2 <- stream_chem_data |> 
-  filter(waterYr == 2021) |> 
+  filter(waterYr == 2024) |> 
   ggplot(aes(x = DOC, y = pH)) + 
   geom_point(alpha = 0.5)
 
@@ -107,7 +107,7 @@ p2
 #| echo: true
 #........................add a trend line........................
 stream_chem_data |> 
-  filter(waterYr %in% c(2011:2021)) |>  
+  filter(waterYr %in% c(2014:2024)) |>  
   filter(site == "W5") |> 
   ggplot(aes(x = DOC, y = pH)) + 
   geom_point(alpha = 0.5) +
@@ -126,7 +126,7 @@ stream_chem_data |>
 #| warning: false
 #..........................bubble chart..........................
 stream_chem_data |> 
-  filter(waterYr == 2021) |> 
+  filter(waterYr == 2024) |> 
   ggplot(aes(x = DOC, y = pH)) + 
   geom_point(alpha = 0.5) +
   labs(x = "DOC (mg/L)", size = "Al (mg/L)", color = "Site")
@@ -142,14 +142,14 @@ stream_chem_data |>
 #| layout-ncol: 2
 #.......................scale size by area.......................
 stream_chem_data |> 
-  filter(waterYr == 2021) |> 
+  filter(waterYr == 2024) |> 
   ggplot(aes(x = DOC, y = pH, color = site, size = Al_ICP)) + 
   geom_point(alpha = 0.5) +
   labs(x = "DOC (mg/L)", size = "Al (mg/L)", color = "Site")
 
 #...................DON'T scale size by radius...................
 stream_chem_data |> 
-  filter(waterYr == 2021) |> 
+  filter(waterYr == 2024) |> 
   ggplot(aes(x = DOC, y = pH, color = site, size = Al_ICP)) + 
   geom_point(alpha = 0.5) +
   scale_radius(range = c(1, 10)) +
@@ -164,7 +164,7 @@ stream_chem_data |>
 #| warning: false
 #...................color for a third variable...................
 stream_chem_data |> 
-  filter(waterYr == 2021) |> 
+  filter(waterYr == 2024) |> 
   ggplot(aes(x = DOC, y = pH)) + 
   geom_point(alpha = 0.5, size = 2) +
   labs(x = "DOC (mg/L)")
@@ -179,13 +179,13 @@ stream_chem_data |>
 #| layout-ncol: 2
 #......................effect of DOC on pH.......................
 stream_chem_data |> 
-  filter(waterYr == 2021) |> 
+  filter(waterYr == 2024) |> 
   ggplot(aes(x = DOC, y = pH, color = site)) + 
   geom_point(alpha = 0.5)
 
 #....................effect of DOC on Al_ICP.....................
 stream_chem_data |> 
-  filter(waterYr == 2021) |> 
+  filter(waterYr == 2024) |> 
   ggplot(aes(x = Al_ICP, y = pH, color = site)) + 
   geom_point(alpha = 0.5)
 ```

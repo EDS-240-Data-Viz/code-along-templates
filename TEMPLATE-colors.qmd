@@ -96,7 +96,7 @@ cat_color_plot
 con_color_plot
 
 # for classed continuous color scales ----
-con_color_plot
+
 ```
 
 ### Accessibility tips

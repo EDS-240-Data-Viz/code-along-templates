@@ -79,7 +79,7 @@ precip_wrangled <- precip_data |>
   # update county name so that it matches the spelling in `county_geo` df ----
   mutate(county = str_replace(string = county, pattern = "Dona Ana County", replacement = "Doña Ana County")) |>
   
-  # coerce precip & 20th centruy avg from chr to numeric ----
+  # coerce precip & 20th century avg from chr to numeric ----
   mutate(value = as.numeric(value),
          x1901_2000_mean = as.numeric(x1901_2000_mean)) |>
   

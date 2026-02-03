@@ -97,31 +97,9 @@ con_color_plot
 
 # for classed continuous color scales ----
 
+
 ```
 
-### Accessibility tips
-
-- outline light-colored points, which are difficult to see
-
-```{r}
-#| eval: true
-#| echo: true
-#| warning: false
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = body_mass_g)) +
-  geom_point(size = 4, alpha = 0.8) +
-  scale_color_distiller(palette = "BuPu")
-```
-
-- use redundant mapping (colors & shapes) whenever possible 
-
-```{r}
-#| eval: true
-#| echo: true
-#| warning: false
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
-  geom_point(size = 4, alpha = 0.8) + 
-  scale_color_viridis_d(option = "turbo") 
-```
 
 ## Paletteer
 

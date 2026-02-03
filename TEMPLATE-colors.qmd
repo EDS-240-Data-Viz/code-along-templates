@@ -96,12 +96,22 @@ cat_color_plot
 con_color_plot
 
 # for classed continuous color scales ----
+con_color_plot
 
+
+
+# Accessibility tip:
 
 ```
 
 
-## Paletteer
+## `{paletteer}`
+
+A few different ways to use `{paletteer}` palettes, but my preferred approach takes two steps: 
+
+1. create vector of colors using `paletteer_*()`
+2. apply your palette using the appropriate `ggplot::scale_*()` function
+
 
 ```{r}
 #| eval: true
@@ -110,105 +120,45 @@ con_color_plot
 library(paletteer)
 ```
 
-Explore available packages in the form of built-in data frames:
-
-```{r}
-#| eval: false
-#| echo: true
-# view names of supported pkgs/palettes ----
-View(palettes_d_names)
-View(palettes_c_names)
-```
-
-### I. apply palette using `scale_*_paletteer_*()`
-
-```{r}
-#| eval: true
-#| echo: true
-#| warning: false
-
-# discrete data / palette ----
-cat_color_plot 
-
-# continuous data / palette (unclassed) ----
-con_color_plot 
-
-# continuous data / palette (classed) ----
-con_color_plot 
-```
-
-### II. create vector of colors using `paletteer_*()`, then apply using the appropriate `ggplot::scale_*()` function
-
-- discrete data / palette example: 
 
 ```{r}
 #| eval: true
 #| echo: true
 #| warning: false
 #| message: false
-# view names of pkgs/palettes ----
-# View(palettes_d_names)
 
-# create palette ----
 
-# apply to scatter plot (use `color` variant) ----
+# Discrete Data ------
+
+# Step 1: Create palette
+pal_d 
+
+#Step 2 Apply palette using `color` variant 
 cat_color_plot 
 
-# apply to histogram (use `fill` variant) ----
+#Step 2 Apply palette using `fill` variant)
 ggplot(penguins, aes(x = body_mass_g, fill = species)) +
   geom_histogram() 
 ```
 
-- continuous data / palette example: 
+
 
 ```{r}
 #| eval: true
 #| echo: true
 #| warning: false
 #| message: false
-# view names of pkgs/palettes ----
-# View(palettes_c_names)
 
-# create palette ----
+# Continuous Data ------
 
-# apply to scatter plot as an unclassed palette (use `gradientn` variant) ---- 
-con_color_plot
+## Step 1:  create palette
+pal_c 
 
-# apply to scatter plot as a classed (binned) palette (use `stepsn` variant) ---- 
+#Step 2: Apply palette using `gradientn` variant
 con_color_plot 
-```
 
-## Subduing pure hues
-
-1. Adjust **saturation** when selecting a HEX code from Google's color picker, <https://g.co/kgs/9SQkdgv>, or adjust **chroma** directly in your ggplot:
-
-```{r}
-#| eval: true
-#| echo: true
-#| warning: false
-ggplot(na.omit(penguins), aes(x = species, fill = sex)) +
-  geom_bar()
-```
-
-2. Adjust **value** when selecting a HEX code from Google's color picker, <https://g.co/kgs/9SQkdgv>, or adjust **lightness** directly in your ggplot:
-
-```{r}
-#| eval: true
-#| echo: true
-#| warning: false
-ggplot(na.omit(penguins), aes(x = bill_length_mm, y = bill_depth_mm, color = sex)) +
-  geom_point()
-```
-
-3. Increase transparency using the `alpha` argument in ggplot
-
-```{r}
-#| eval: true
-#| echo: true
-#| warning: false
-ggplot(penguins, aes(x = species)) +
-  geom_bar(fill = "#00FF33", color = "gray7") + 
-  theme_classic() 
+#Step 2: Apply palette using `stepsn` variant
+con_color_plot 
 ```
 
 ## Some final palette tips
@@ -220,10 +170,13 @@ ggplot(penguins, aes(x = species)) +
 #| echo: true
 #| warning: false
 # create palette ----
+my_palette <- c("#32DE8A", "#E36414", "#0F4C5C")
 
 # plot with custom palette ----
-cat_color_plot +
-  scale_color_manual(values = c("#32DE8A", "#E36414", "#0F4C5C")) 
+cat_color_plot 
+
+
+
 ```
 
 ### Set color names
@@ -246,46 +199,5 @@ penguins |>
   ggplot(aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
   geom_point(size = 4, alpha = 0.8) +
   scale_color_manual(values = my_palette_named)
-```
-
-### Use `scale_*_identity()`
-
-- Ex 1: color points based on value
-
-```{r}
-#| eval: true
-#| echo: true
-#| warning: false
-# example 1 ----
-penguins_ex1 <- penguins |> 
-  mutate(
-    my_color = case_when(
-      bill_length_mm < 40 ~ "#D7263D",
-      between(x = bill_length_mm, left = 40, right = 50) ~ "#E4BB97",
-      bill_length_mm > 50 ~ "#386150"
-    )
-  )
-
-ggplot(penguins_ex1, aes(x = bill_length_mm, y = bill_depth_mm)) +
-  geom_point(size = 4, alpha = 0.8) 
-```
-
-- Ex 2: color points based on criteria
-
-```{r}
-#| eval: true
-#| echo: true
-#| warning: false
-# example 2 ----
-penguins_ex2 <- penguins |> 
-  mutate(
-    my_color = case_when(
-      body_mass_g > 6000 ~ "#D7263D",
-      TRUE ~ "gray50"
-    )
-  )
-
-ggplot(penguins_ex2, aes(x = bill_length_mm, y = bill_depth_mm)) +
-  geom_point(size = 4, alpha = 0.8) 
 ```
 

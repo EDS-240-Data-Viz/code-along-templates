@@ -103,6 +103,7 @@ We'll build this plot across both the  [typography](https://eds-240-data-viz.git
 #| warning: false
 #| out-width: "100%"
 #......................create color palette......................
+# colors: #448F9C, #9C7344, #0C1509, #4E514D
 
 #........................preview palette.........................
 

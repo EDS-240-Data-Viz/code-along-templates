@@ -56,8 +56,6 @@ subregion_names <- tribble(
 
 #....................import Font Awesome fonts...................
 
-#......enable {showtext} rendering for all newly opened GDs......
-
 ```
 
 ## Wrangle data
@@ -68,6 +66,7 @@ This is the same code we saw in the [amounts / rankings lecture](https://eds-240
 #| eval: true
 #| echo: true
 #| warning: false
+#| message: false
 #......create df with just CA water resource region (HUC 18).....
 ca_region <- iwa_data |> 
   clean_names() |> 
@@ -128,7 +127,9 @@ ggplot(sbc_subbasin_monthly) +
              size = 5,
              stroke = 2) +
   labs(x = "Mean monthly water availability & consumption (mm)") +
-  theme(axis.title.y = element_blank())
+  theme(
+    axis.title.y = element_blank()
+    )
 
 #..............enable {showtext} for newly opened GD.............
 
